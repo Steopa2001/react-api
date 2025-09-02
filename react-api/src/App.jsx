@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 //importo axios
 import axios from "axios";
 
+import Header from "./components/Header";
+
 function App() {
   //Stato lista attori
   const [actors, setActors] = useState([]);
@@ -18,6 +20,8 @@ function App() {
   }, []);
 
   return (
+    <>
+      <Header />
     <div className="container">
       <h1>Actors</h1>
       <div className="row">
@@ -56,6 +60,7 @@ function App() {
         <div className="col"></div>
       </div>
     </div>
+    </>
   );
 }
 

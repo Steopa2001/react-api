@@ -13,3 +13,10 @@
   display: block;
   margin: 0 auto; 
 }
+
+.header {
+  background-color: rgba(7, 7, 50, 0.936);
+  color: white;
+  text-align: center;
+  padding: 8px;
+}
