@@ -18,24 +18,19 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    //richiesta attori
-    axios.get("https://lanciweb.github.io/demo/api/actors/").then((res) => {
-      console.log("Actors:", res.data);
-      // //Salvo nello stato
-      // setActors(res.data);
+let combinedArtists = [];
 
-      // Aggiungo gli attori allo stato
-      setAllArtists((prev) => [...prev, ...res.data]);
-    });
-    //richiesta attrici
-    axios.get("https://lanciweb.github.io/demo/api/actresses/").then((res) => {
-      console.log("Actresses:", res.data);
-      // //Salvo nello stato
-      // setActresses(res.data);
-
-      // Aggiungo le attrici allo stato
-      setAllArtists((prev) => [...prev, ...res.data]);
-    });
+//Unisco le chiamate ajax in modo che quando cerco l'attore/attrice per nome non mi faccia vedere il doppione
+  axios.get("https://lanciweb.github.io/demo/api/actors/")
+    .then(res => {
+      combinedArtists = [...res.data.map(a => ({ ...a, type: "Actor" }))];
+      return axios.get("https://lanciweb.github.io/demo/api/actresses/");
+    })
+    .then(res => {
+      combinedArtists = [...combinedArtists, ...res.data.map(a => ({ ...a, type: "Actress" }))];
+      // aggiorno lo stato UNA SOLA VOLTA
+      setAllArtists(combinedArtists); 
+    })
     //eseguo solo al primo caricamento
   }, []);
 
@@ -64,7 +59,7 @@ function App() {
         </div>
 
         <div className="row">
-          {allArtists.map((artist, index) => (
+          {filteredArtists.map((artist, index) => (
             <div key={index} className="col-md-4 mb-4">
               <div className="card h-100 p-2">
                 {/* Nome Attore */}
