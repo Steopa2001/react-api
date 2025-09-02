@@ -14,6 +14,9 @@ function App() {
   // Stato lista unificata di attori e attrici
   const [allArtists, setAllArtists] = useState([]);
 
+  // Stato per la ricerca
+  const [searchTerm, setSearchTerm] = useState("");
+
   useEffect(() => {
     //richiesta attori
     axios.get("https://lanciweb.github.io/demo/api/actors/").then((res) => {
@@ -22,7 +25,7 @@ function App() {
       // setActors(res.data);
 
       // Aggiungo gli attori allo stato
-        setAllArtists(prev => [...prev, ...res.data]);
+      setAllArtists((prev) => [...prev, ...res.data]);
     });
     //richiesta attrici
     axios.get("https://lanciweb.github.io/demo/api/actresses/").then((res) => {
@@ -31,10 +34,15 @@ function App() {
       // setActresses(res.data);
 
       // Aggiungo le attrici allo stato
-        setAllArtists(prev => [...prev, ...res.data]);
+      setAllArtists((prev) => [...prev, ...res.data]);
     });
     //eseguo solo al primo caricamento
   }, []);
+
+  // Filtraggio in base al termine di ricerca
+  const filteredArtists = allArtists.filter((artist) =>
+    artist.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
@@ -43,6 +51,18 @@ function App() {
         {/* Sezione Attori e Attrici*/}
         <h1 className="text-center mt-4">Actors & Actresses</h1>
         <p className="text-center">Combined list of actors and actresses</p>
+
+        {/* Input ricerca */}
+        <div className="mb-4 text-center">
+          <input
+            type="text"
+            placeholder="Cerca il nome dell'attore/attrice..."
+            className="form-control w-50 mx-auto"
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+          />
+        </div>
+
         <div className="row">
           {allArtists.map((artist, index) => (
             <div key={index} className="col-md-4 mb-4">
@@ -51,7 +71,11 @@ function App() {
                 <h2 className="text-center text-white">{artist.name}</h2>
 
                 {/* Immagine attore */}
-                <img className="img-artist" src={artist.image} alt={artist.name} />
+                <img
+                  className="img-artist"
+                  src={artist.image}
+                  alt={artist.name}
+                />
 
                 {/* Anno di nascita e nazionalità */}
                 <div className="d-flex justify-content-center">
