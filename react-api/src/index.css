@@ -6,6 +6,7 @@
 
 .card {
   background-color: rgba(7, 7, 50, 0.936);
+  border-radius: 20px;
 }
 
 .card .img-actor {

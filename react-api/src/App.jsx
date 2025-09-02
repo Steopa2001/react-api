@@ -8,6 +8,8 @@ import Header from "./components/Header";
 function App() {
   //Stato lista attori
   const [actors, setActors] = useState([]);
+  //Stato lista attrici
+  const [actresses, setActresses] = useState([]);
 
   useEffect(() => {
     //richiesta attori
@@ -16,14 +18,23 @@ function App() {
       //Salvo nello stato
       setActors(res.data);
     });
+    //richiesta attrici
+    axios.get("https://lanciweb.github.io/demo/api/actors/").then((res) => {
+      console.log("Actresses:", res.data);
+      //Salvo nello stato
+      setActors(res.data);
+    });
     //eseguo solo al primo caricamento
   }, []);
+
+
 
   return (
     <>
       <Header />
     <div className="container">
-      <h1>Actors</h1>
+      <h1 className="text-center mt-4">Actors</h1>
+      <p className="text-center">List of actors fetched from an API</p>
       <div className="row">
         {actors.map((actor, index) => (
           <div key={index} className="col-md-4 mb-4">
@@ -57,7 +68,6 @@ function App() {
             </div>
           </div>
         ))}
-        <div className="col"></div>
       </div>
     </div>
     </>
