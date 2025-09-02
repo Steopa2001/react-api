@@ -23,13 +23,13 @@ function App() {
       <div className="row">
         {actors.map((actor, index) => (
           <div key={index} className="col-md-4 mb-4">
-            <div className="card h-100">
+            <div className="card h-100 p-2">
 
               {/* Nome Attore */}
               <h2 className="text-center text-white">{actor.name}</h2>
 
               {/* Immagine attore */}
-              <img src={actor.image} alt={actor.name} />
+              <img className="img-actor" src={actor.image} alt={actor.name} />
 
               {/* Anno di nascita e nazionalità */}
               <div className="d-flex justify-content-center">
@@ -39,7 +39,7 @@ function App() {
               {/* Biografia */}
               <p className="text-white text-center">{actor.biography}</p>
               {/* Noto per */}
-              <div className="text-center text-danger">
+              <div className="text-center text-danger mb-2">
               <span><em><strong>Known for:</strong></em></span>
               <br/>
               <span><em>{actor.known_for}</em></span>

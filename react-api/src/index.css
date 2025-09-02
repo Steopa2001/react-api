@@ -7,3 +7,9 @@
 .card {
   background-color: rgba(7, 7, 50, 0.936);
 }
+
+.card .img-actor {
+  width: 50%;
+  display: block;
+  margin: 0 auto; 
+}
